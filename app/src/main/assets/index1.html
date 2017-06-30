@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="js/jquery.js">
+	</script>
+	<!-- Buttons 库的核心文件 -->
+  <link rel="stylesheet" href="css/buttons.css">
+ 
+<!--字体样式-->
+<link rel="stylesheet" href="iconfont/iconfont.css" type="text/css" />
+
+<!--必要样式-->
+<link rel="stylesheet" href="css/index.css" type="text/css" />
+<link rel="stylesheet" href="css/animate.css" type="text/css" />
+
+	<style type="text/css">
+			img {
+				max-width: 100%;
+			}
+			mydiv{			
+				border-bottom:2px dashed #F00
+			}
+			#nav {
+				display: inline;
+				height: 50px;
+				width: 50px;
+				float: left;
+				padding: 5px;
+			}
+			/*头像*/
+
+			#nav img {
+				width: 50px;
+				height: 50px;
+			}
+
+			#info {
+				display: inline;
+				width: 100%;
+				padding: 10px;
+			}
+
+			#content {
+				/*background: #eee;*/			
+				margin-left: 60px;
+			}
+			#pic{
+				width:40px;height:40px;
+				display: inline;	
+				margin-left: 50px;
+			}
+			
+		</style>
+	
+	<script type="text/javascript">
+			$(document).ready(
+
+				function() {
+					$("#head_background").click(
+						function() {
+							var str = $("#content").text();
+							window.weichat.showToast("点击图片");
+						}
+					)
+
+
+				});
+			$(function(){
+		$("#praise").click(function(){
+			var praise_img = $("#praise-img");
+			var text_box = $("#add-num");
+			var praise_txt = $("#praise-txt");
+			var num=parseInt(praise_txt.text());
+			if(praise_img.attr("src") == ("Images/yizan.png")){
+				$(this).html("<img src='images/zan.png' id='praise-img' class='animation' />");
+				praise_txt.removeClass("hover");
+				text_box.show().html("<em class='add-animation'>-1</em>");
+				$(".add-animation").removeClass("hover");
+				num -=1;
+				praise_txt.text(num)
+			}else{
+				$(this).html("<img src='images/yizan.png' id='praise-img' class='animation' />");
+				praise_txt.addClass("hover");
+				text_box.show().html("<em class='add-animation'>+1</em>");
+				$(".add-animation").addClass("hover");
+				num +=1;
+				praise_txt.text(num)
+			}
+		});
+	})
+			
+		</script>
+
+</head>
+
+<body>
+<img id="head_background" src="images/background.jpg" />
+<script>
+	var json = window.weichat.getJson();
+	var infos = eval(json);
+	for(var i = 0; i < infos.length; i++) {
+		info = infos[i];
+		var img = info.icon;
+		var userName = info.name;
+		var content = info.content;
+		var pic = info.pic;
+		$("#head_background").after("<div ><div id='nav'><img src=" + img + " /></div><div id='info'><div id='userName'>" + userName + "</div><p id='content'>" + content + "</p></div><div id='pic'><img src=" + pic + " />  <div class='praise'>	<span id='praise'><img src='images/zan.png' id='praise-img' /></span>	<span id='praise-txt'>0</span>	</div> </div><HR style='FILTER: alpha(opacity=100,finishopacity=0,style=2)' width='100%' color=#eee SIZE=10>");
+		$("#userName").click(
+			function() {
+				var str = $(this).text();
+				window.weichat.showToast(str);
+			}
+		)
+		$("#content").click(
+			function() {
+				var str = $(this).text();
+				window.weichat.showToast(str);
+			}
+		)
+	}
+
+	
+</script>
+</body>
+
+</html>
